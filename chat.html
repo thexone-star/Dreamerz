@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chat - Dream Interpreter</title>
 
-  <!-- Style pour full screen -->
+  <!-- Style pour occuper toute la hauteur de la fenêtre -->
   <style>
     html, body {
       margin: 0;
@@ -23,21 +23,12 @@
       color: #fff;
       padding: 15px;
       text-align: center;
-      flex: 0 0 auto; /* hauteur fixe du header */
       font-size: 1.2rem;
     }
 
     #chat-container {
-      flex: 1 1 auto;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Important : le chat n8n utilise un div interne, on force la hauteur */
-    #chat-container > div {
       flex: 1;
+      width: 100%;
       height: 100%;
     }
   </style>
@@ -49,10 +40,10 @@
 
   <header>Dream Interpreter 💭</header>
 
-  <!-- Conteneur full screen pour le chat -->
+  <!-- Conteneur pour le chat -->
   <div id="chat-container"></div>
 
-  <!-- Script n8n Chat -->
+  <!-- Script pour initialiser le chat -->
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
@@ -61,7 +52,8 @@
     createChat({
       container: '#chat-container',
       webhookUrl: 'https://monkfish-huge-widely.ngrok-free.app/webhook/44d31a27-b8b0-4b2f-b057-26658158af24/chat',
-      user: userName
+      user: userName,
+      mode: 'fullscreen'  // Mode plein écran
     });
   </script>
 
