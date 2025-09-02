@@ -43,7 +43,7 @@
       try {
         // ⚠️ remplace l’URL par celle de ton webhook n8n
         const res = await fetch("https://monkfish-huge-widely.ngrok-free.app/webhook/dream-chat", {
-          method: "Get",
+          method: "Post",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message: text, user: userName })
         });
@@ -65,6 +65,7 @@
   </script>
 </body>
 </html>
+
 
 
 
