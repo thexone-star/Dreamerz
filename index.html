@@ -1,33 +1,134 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dream Interpreter - Accueil</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Madame Rêve - Accueil</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
   <style>
-    body { font-family: Arial, sans-serif; display:flex; justify-content:center; align-items:center; height:100vh; background:#f0f0f0; }
-    .box { background:#fff; padding:20px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1); width:300px; text-align:center; }
-    input { width:100%; padding:10px; margin:10px 0; border:1px solid #ccc; border-radius:6px; }
-    button { padding:10px; width:100%; background:#4CAF50; color:#fff; border:none; border-radius:6px; cursor:pointer; }
-    button:hover { background:#45a049; }
-    a { display:block; margin-top:15px; color:#555; text-decoration:none; font-size:14px; }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+    html, body {
+      height:100%;
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    }
+
+    header {
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      background: rgba(110,142,251,0.9);
+      color:#fff;
+      padding:15px 20px;
+      font-size:1.3rem;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      box-shadow:0 2px 15px rgba(0,0,0,.2);
+    }
+
+    .box {
+      background: rgba(255,255,255,0.9);
+      padding:30px 25px;
+      border-radius:15px;
+      box-shadow:0 4px 20px rgba(0,0,0,0.2);
+      width:320px;
+      text-align:center;
+      margin-top:80px; /* pour pas coller au header */
+    }
+
+    h2 { margin-bottom:10px; color:#333; }
+    p { margin-bottom:15px; color:#555; }
+
+    input {
+      width:100%;
+      padding:10px;
+      margin:10px 0;
+      border:1px solid #ccc;
+      border-radius:8px;
+      font-size:1rem;
+    }
+
+    label {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:0.9rem;
+      margin:10px 0;
+      color:#444;
+      text-align:left;
+    }
+
+    a {
+      color:#6e8efb;
+      text-decoration:none;
+      font-weight:600;
+    }
+    a:hover { text-decoration:underline; }
+
+    button {
+      padding:12px;
+      width:100%;
+      background:#6e8efb;
+      color:#fff;
+      border:none;
+      border-radius:8px;
+      font-size:1rem;
+      cursor:pointer;
+      margin-top:10px;
+      transition: background 0.3s;
+    }
+    button:hover { background:#5a7dfa; }
+    button:disabled { background:#aaa; cursor:not-allowed; }
   </style>
 </head>
 <body>
+
+  <header>
+    <i class="fas fa-cloud-moon"></i>&nbsp;
+    Madame Rêve - Interprète des Rêves
+  </header>
+
   <div class="box">
     <h2>Bienvenue 👋</h2>
     <p>Veuillez vous identifier pour continuer</p>
+
     <form onsubmit="goToChat(event)">
       <input type="text" id="name" placeholder="Votre prénom" required>
       <input type="email" id="email" placeholder="Votre email" required>
-      <button type="submit">Entrer</button>
+
+      <label>
+        <input type="checkbox" id="policyCheck">
+        J’ai lu et j’accepte les <a href="policies.html" target="_blank">politiques</a>
+      </label>
+
+      <button type="submit" id="submitBtn" disabled>Entrer</button>
     </form>
-    <a href="policies.html">Lire les politiques</a>
   </div>
 
   <script>
+    const policyCheck = document.getElementById("policyCheck");
+    const submitBtn = document.getElementById("submitBtn");
+
+    // Activer/désactiver le bouton selon la case cochée
+    policyCheck.addEventListener("change", () => {
+      submitBtn.disabled = !policyCheck.checked;
+    });
+
     function goToChat(e) {
       e.preventDefault();
+      if (!policyCheck.checked) {
+        alert("Vous devez accepter les politiques avant de continuer !");
+        return;
+      }
       const name = document.getElementById("name").value;
       const email = document.getElementById("email").value;
       localStorage.setItem("userName", name);
@@ -35,5 +136,6 @@
       window.location.href = "chat.html";
     }
   </script>
+
 </body>
 </html>
