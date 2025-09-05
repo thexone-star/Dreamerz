@@ -35,19 +35,14 @@
     .logout-btn { background:rgba(255,255,255,.2); border:none; color:#fff; padding:8px 15px; border-radius:20px; cursor:pointer; font-size:.9rem; display:flex; align-items:center; gap:6px; }
     .logout-btn:hover { background:rgba(255,255,255,.3); }
 
-    /* Conteneur qui prend tout l’espace restant (plein écran pour le chat) */
     #chat-container { position:relative; flex:1 1 auto; width:100%; height:100%; }
-
-    /* Important pour le mode fullscreen (doc @n8n/chat) */
     #chat-container, #n8n-chat { width:100%; height:100%; }
 
-    /* 🎨 Ajout de l'image de fond pour le chat n8n-chat  */
     #n8n-chat {
       background: url("https://i.imgur.com/SLLphqg.jpeg") no-repeat center center;
       background-size: cover;
     }
 
-    /* Personnalisation/masquage du header interne du widget n8n */
     #chat-container {
       --chat--header-height: 0;
       --chat--header--padding: 0;
@@ -81,25 +76,27 @@
   </header>
 
   <div id="chat-container">
-    <!-- le widget s’injecte ici -->
     <div id="n8n-chat"></div>
   </div>
 
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-    // Infos utilisateur stockées depuis l'accueil
+    // Récupération des infos utilisateur
     const userName  = localStorage.getItem('userName')  || 'Utilisateur';
     const userEmail = localStorage.getItem('userEmail') || '';
     document.getElementById('userNameDisplay').textContent = userName;
     document.getElementById('userAvatar').textContent = userName.charAt(0).toUpperCase();
 
-    // Initialisation du chat n8n
+    // Initialisation du chat avec métadonnées (prénom + email envoyés à n8n)
     createChat({
       target: '#n8n-chat',
       mode: 'fullscreen',
       webhookUrl: 'https://monkfish-huge-widely.ngrok-free.app/webhook/44d31a27-b8b0-4b2f-b057-26658158af24/chat',
-      metadata: { userName, userEmail },
+      metadata: { 
+        name: userName, 
+        email: userEmail 
+      },
       showWelcomeScreen: false,
       initialMessages: [],
       i18n: {
@@ -118,10 +115,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
