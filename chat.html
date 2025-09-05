@@ -98,7 +98,11 @@
         email: userEmail 
       },
       showWelcomeScreen: false,
-      initialMessages: [],
+      initialMessages: [
+    `Bonjour ${userName} 👋, bienvenue dans votre espace d’interprétation des rêves. 
+     Vous êtes connecté avec l’email : ${userEmail}. 
+     dnas 3 secondes le chat commencera.`
+  ],
       i18n: {
         en: { title: '', subtitle: '', footer: '', getStarted: '', inputPlaceholder: 'Écrivez votre rêve…' }
       }
@@ -115,3 +119,4 @@
   </script>
 </body>
 </html>
+
