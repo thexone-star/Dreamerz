@@ -3,57 +3,246 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat - Dream Interpreter</title>
-
-  <!-- Style pour occuper toute la hauteur de la fenêtre -->
+  <title>Madame Rêve - Interprétation des Rêves</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+  
   <style>
-    html, body {
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    html, body {
       height: 100%;
       width: 100%;
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
       display: flex;
       flex-direction: column;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
+      overflow: hidden;
     }
 
     header {
-      background: #4CAF50;
-      color: #fff;
-      padding: 15px;
+      background: rgba(110, 142, 251, 0.9);
+      color: white;
+      padding: 15px 20px;
       text-align: center;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
     }
-
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .logo i {
+      font-size: 1.8rem;
+    }
+    
+    .user-info {
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .user-avatar {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: #5a7dfa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+    }
+    
     #chat-container {
       flex: 1;
       width: 100%;
       height: 100%;
+      position: relative;
+    }
+    
+    /* Overlay pour l'arrière-plan */
+    #chat-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%236e8efb" opacity="0.05"/><path d="M20,20 C40,0 60,0 80,20 C100,40 100,60 80,80 C60,100 40,100 20,80 C0,60 0,40 20,20 Z" fill="%23a777e3" opacity="0.08"/></svg>');
+      background-size: cover;
+      z-index: -1;
+    }
+    
+    /* Personnalisation du thème n8n chat */
+    .n8n-chat {
+      --color-chat-bubble-user: #6e8efb;
+      --color-chat-bubble-bot: #e8ebf2;
+      --color-chat-bubble-user-text: white;
+      --color-chat-bubble-bot-text: #333;
+      --color-chat-input-background: rgba(255, 255, 255, 0.95);
+      --color-chat-header-background: rgba(110, 142, 251, 0.9);
+    }
+    
+    /* Cacher le header intégré de n8n chat */
+    .n8n-chat .header {
+      display: none !important;
+    }
+    
+    /* Cacher le message de bienvenue de n8n */
+    .n8n-chat .welcome-message {
+      display: none !important;
+    }
+    
+    .logout-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .logout-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    
+    /* Animation d'entrée */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    header, #chat-container {
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        padding: 12px 15px;
+        font-size: 1.1rem;
+      }
+      
+      .user-info span {
+        display: none;
+      }
+      
+      .logo span {
+        font-size: 1.1rem;
+      }
     }
   </style>
-
-  <!-- CSS du chat n8n -->
-  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 </head>
 <body>
 
-  <header>Dream Interpreter 💭</header>
+  <header>
+    <div class="logo">
+      <i class="fas fa-cloud-moon"></i>
+      <span>Madame Rêve - Interprète des Rêves</span>
+    </div>
+    <div class="user-info">
+      <div class="user-avatar" id="userAvatar">U</div>
+      <span id="userNameDisplay">Utilisateur</span>
+      <button class="logout-btn" id="logoutBtn">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Déconnexion</span>
+      </button>
+    </div>
+  </header>
 
-  <!-- Conteneur pour le chat -->
   <div id="chat-container"></div>
 
-  <!-- Script pour initialiser le chat -->
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
+    // Récupérer les informations utilisateur
     const userName = localStorage.getItem("userName") || "Utilisateur";
-
+    const userEmail = localStorage.getItem("userEmail") || "";
+    const userInitial = userName.charAt(0).toUpperCase();
+    
+    // Mettre à jour l'affichage
+    document.getElementById('userNameDisplay').textContent = userName;
+    document.getElementById('userAvatar').textContent = userInitial;
+    
+    // Initialiser le chat avec configuration personnalisée
     createChat({
       container: '#chat-container',
       webhookUrl: 'https://monkfish-huge-widely.ngrok-free.app/webhook/44d31a27-b8b0-4b2f-b057-26658158af24/chat',
       user: userName,
-      mode: 'fullscreen'  // Mode plein écran
+      mode: 'fullscreen',
+      theme: {
+        button: {
+          background: '#6e8efb'
+        }
+      },
+      // Désactiver les messages par défaut
+      welcomeMessage: '', // Message de bienvenue vide
+      agent: {
+        name: 'Madame Rêve', // Nom de votre agent
+        avatar: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%236e8efb"/><text x="50" y="60" font-size="40" text-anchor="middle" fill="white">💭</text></svg>'
+      },
+      // Cacher le header intégré
+      showHeader: false,
+      // Désactiver le message de bienvenue
+      showWelcomeMessage: false
+    });
+    
+    // Supprimer les messages par défaut après le chargement
+    setTimeout(() => {
+      // Sélectionner et supprimer les éléments de bienvenue
+      const welcomeMessages = document.querySelectorAll('.n8n-chat .message:not(.user)');
+      welcomeMessages.forEach(msg => {
+        if (msg.textContent.includes('Hi there') || 
+            msg.textContent.includes('Start a chat') || 
+            msg.textContent.includes('Nathan')) {
+          msg.remove();
+        }
+      });
+      
+      // Ajouter un message personnalisé de Madame Rêve
+      const chatMessages = document.querySelector('.n8n-chat .messages');
+      if (chatMessages) {
+        const welcomeMsg = document.createElement('div');
+        welcomeMsg.className = 'message bot';
+        welcomeMsg.innerHTML = `
+          <div class="bubble">
+            <div class="avatar">
+              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%236e8efb'/><text x='50' y='60' font-size='40' text-anchor='middle' fill='white'>💭</text></svg>" alt="Madame Rêve">
+            </div>
+            <div class="content">
+              <div class="text">Bonjour, je suis Madame Rêve. Racontez-moi votre rêve et je vous aiderai à en découvrir la signification.</div>
+            </div>
+          </div>
+        `;
+        chatMessages.appendChild(welcomeMsg);
+      }
+    }, 1000);
+    
+    // Gestion de la déconnexion
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userEmail');
+        window.location.href = 'index.html'; // Rediriger vers la page d'accueil
+      }
     });
   </script>
 
