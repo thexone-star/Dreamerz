@@ -1,126 +1,62 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Madame Rêve - Interprétation des Rêves</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
-  
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet"/>
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
     html, body {
-      height: 100%;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
+      height:100%;
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
     }
 
     header {
-      background: rgba(110, 142, 251, 0.9);
-      color: white;
-      padding: 15px 20px;
-      text-align: center;
-      font-size: 1.3rem;
-      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 10;
+      background: rgba(110,142,251,0.9); color:#fff; padding:15px 20px; font-size:1.3rem;
+      display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 15px rgba(0,0,0,.2); z-index:10;
+      flex:0 0 auto;
     }
-    
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .logo i {
-      font-size: 1.8rem;
-    }
-    
-    .user-info {
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .user-avatar {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      background: #5a7dfa;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      color: white;
-    }
-    
-    #chat-container {
-      flex: 1;
-      width: 100%;
-      height: 100%;
-      position: relative;
-    }
+    .logo { display:flex; align-items:center; gap:10px; }
+    .logo i { font-size:1.8rem; }
+    .user-info { font-size:.9rem; display:flex; align-items:center; gap:10px; }
+    .user-avatar { width:35px; height:35px; border-radius:50%; background:#5a7dfa; display:flex; align-items:center; justify-content:center; font-weight:bold; color:#fff; }
+    .logout-btn { background:rgba(255,255,255,.2); border:none; color:#fff; padding:8px 15px; border-radius:20px; cursor:pointer; font-size:.9rem; display:flex; align-items:center; gap:6px; }
+    .logout-btn:hover { background:rgba(255,255,255,.3); }
 
-    /* 🎨 Fond personnalisé du chat */
-    .n8n-chat {
+    /* Conteneur qui prend tout l’espace restant (plein écran pour le chat) */
+    #chat-container { position:relative; flex:1 1 auto; width:100%; height:100%; }
+
+    /* Important pour le mode fullscreen (doc @n8n/chat) */
+    #chat-container, #n8n-chat { width:100%; height:100%; }
+
+    /* 🎨 Ajout de l'image de fond pour le chat */
+    #n8n-chat {
       background: url("https://i.imgur.com/1xAeSWq.jpeg") no-repeat center center;
       background-size: cover;
-      --chat--background: transparent;
-      --chat--input-background: rgba(255, 255, 255, 0.85);
-      --chat--bubble-user: rgba(110, 142, 251, 0.9);
-      --chat--bubble-bot: rgba(255, 255, 255, 0.8);
-      --chat--bubble-user-text: #fff;
-      --chat--bubble-bot-text: #222;
-      position: relative;
     }
 
-    /* Overlay pour effet rêve 🌙 */
-    .n8n-chat::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.35);
-      backdrop-filter: blur(3px);
-      z-index: 0;
+    /* Personnalisation/masquage du header interne du widget n8n */
+    #chat-container {
+      --chat--header-height: 0;
+      --chat--header--padding: 0;
+      --chat--header--border-top: none;
+      --chat--header--border-bottom: none;
+      --chat--heading--font-size: 0;
+      --chat--subtitle--line-height: 0;
     }
-
-    .n8n-chat .messages,
-    .n8n-chat .chat-input {
-      position: relative;
-      z-index: 1; /* garder les messages au-dessus de l’overlay */
-    }
-
-    /* Cacher header + welcome message n8n */
-    .n8n-chat .header { display: none !important; }
-    .n8n-chat .welcome-message { display: none !important; }
-
-    .logout-btn {
-      background: rgba(255, 255, 255, 0.2);
-      border: none;
-      color: white;
-      padding: 8px 15px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: background 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    
-    .logout-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
+  
+    @media (max-width:768px) {
+      header { padding:12px 15px; font-size:1.1rem; }
+      .user-info span { display:none; }
+      .logo span { font-size:1.1rem; }
     }
   </style>
 </head>
@@ -135,33 +71,35 @@
       <div class="user-avatar" id="userAvatar">U</div>
       <span id="userNameDisplay">Utilisateur</span>
       <button class="logout-btn" id="logoutBtn">
-        <i class="fas fa-sign-out-alt"></i>
-        <span>Déconnexion</span>
+        <i class="fas fa-sign-out-alt"></i><span>Déconnexion</span>
       </button>
     </div>
   </header>
 
-  <div id="chat-container"></div>
+  <div id="chat-container">
+    <!-- le widget s’injecte ici -->
+    <div id="n8n-chat"></div>
+  </div>
 
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-    const userName = localStorage.getItem("userName") || "Utilisateur";
-    const userInitial = userName.charAt(0).toUpperCase();
-
-    // Mettre à jour l’affichage utilisateur
+    // Infos utilisateur stockées depuis l'accueil
+    const userName  = localStorage.getItem('userName')  || 'Utilisateur';
+    const userEmail = localStorage.getItem('userEmail') || '';
     document.getElementById('userNameDisplay').textContent = userName;
-    document.getElementById('userAvatar').textContent = userInitial;
+    document.getElementById('userAvatar').textContent = userName.charAt(0).toUpperCase();
 
+    // Initialisation du chat n8n
     createChat({
-      container: '#chat-container',
-      webhookUrl: 'https://monkfish-huge-widely.ngrok-free.app/webhook/44d31a27-b8b0-4b2f-b057-26658158af24/chat',
-      user: userName,
+      target: '#n8n-chat',
       mode: 'fullscreen',
-      showHeader: false,
-      showWelcomeMessage: false,
-      theme: {
-        button: { background: '#6e8efb' }
+      webhookUrl: 'https://monkfish-huge-widely.ngrok-free.app/webhook/44d31a27-b8b0-4b2f-b057-26658158af24/chat',
+      metadata: { userName, userEmail },
+      showWelcomeScreen: false,
+      initialMessages: [],
+      i18n: {
+        en: { title: '', subtitle: '', footer: '', getStarted: '', inputPlaceholder: 'Écrivez votre rêve…' }
       }
     });
 
