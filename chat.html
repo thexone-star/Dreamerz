@@ -117,6 +117,24 @@
         window.location.href = 'index.html';
       }
     });
+    // 🔒 Fermeture auto après 90 secondes
+setTimeout(() => {
+  const chat = document.getElementById("chat-container");
+  if (chat) {
+    chat.innerHTML = `
+      <div style="text-align:center; padding:50px; font-size:1.2rem; color:#333;">
+        🌙 La session est terminée.<br>
+        Merci pour votre visite chez Madame Rêve.<br><br>
+        <button onclick="window.location.href='index.html'" 
+          style="padding:10px 20px; border:none; border-radius:6px; background:#6e8efb; color:#fff; cursor:pointer;">
+          Revenir à l'accueil
+        </button>
+      </div>
+    `;
+  }
+}, 90 * 1000); // 1.5 minutes = 90 secondes
+
   </script>
 </body>
 </html>
+
