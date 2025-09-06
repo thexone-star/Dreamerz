@@ -70,47 +70,47 @@
     <div id="n8n-chat"></div>
   </div>
 
-  <script type="module">
-    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+ <script type="module">
+  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-    // Récupération des infos utilisateur
-    const userName  = localStorage.getItem('userName')  || 'Utilisateur';
-    const userEmail = localStorage.getItem('userEmail') || '';
-    document.getElementById('userNameDisplay').textContent = userName;
-    document.getElementById('userAvatar').textContent = userName.charAt(0).toUpperCase();
+  const userName  = (localStorage.getItem('userName')  || 'Utilisateur').trim();
+  const userEmail = (localStorage.getItem('userEmail') || '').trim();
 
-    // Webhook + fallback querystring (garantit la réception côté n8n)
-    const baseWebhook = 'https://monkfish-huge-widely.ngrok-free.app/webhook/44d31a27-b8b0-4b2f-b057-26658158af24/chat';
-    const qs = new URLSearchParams({ userName, userEmail }).toString();
-    const webhookUrl = `${baseWebhook}?${qs}`;
+  // UI header
+  document.getElementById('userNameDisplay').textContent = userName || 'Utilisateur';
+  document.getElementById('userAvatar').textContent = (userName[0] || 'U').toUpperCase();
 
-    // Initialisation du chat avec métadonnées (prénom + email envoyés à n8n)
-    createChat({
-      target: '#n8n-chat',
-      mode: 'fullscreen',
-      webhookUrl, // ← avec query fallback
-      metadata: { 
-        userName,
-        userEmail
-      },
-      showWelcomeScreen: false,
-      initialMessages: [
-        `Bonjour ${userName} 👋, bienvenue dans votre espace d’interprétation des rêves.
-         ${userEmail ? 'Vous êtes connecté avec l’email : ' + userEmail + '.' : ''}`
-      ],
-      i18n: {
-        en: { title: '', subtitle: '', footer: '', getStarted: '', inputPlaceholder: 'Écrivez votre rêve…' }
-      }
-    });
+  // Webhook n8n (pas de query)
+  const webhookUrl = 'https://monkfish-huge-widely.ngrok-free.app/webhook/44d31a27-b8b0-4b2f-b057-26658158af24/chat';
 
-    // Déconnexion
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
-        localStorage.removeItem('userName');
-        localStorage.removeItem('userEmail');
-        window.location.href = 'index.html';
-      }
-    });
-  </script>
+  createChat({
+    target: '#n8n-chat',
+    mode: 'fullscreen',
+    webhookUrl,
+
+    // ✅ Envoie sur deux canaux — ta version reçoit bien "context"
+    metadata: { userName, userEmail },
+    context:  { userName, userEmail },
+
+    showWelcomeScreen: false,
+    // ✅ Toujours une liste de strings (évite React #185)
+    initialMessages: [
+      `Bonjour ${userName || 'cher visiteur'} 👋, bienvenue dans votre espace d’interprétation des rêves.` +
+      (userEmail ? ` Vous êtes connecté avec l’email : ${userEmail}.` : '')
+    ],
+    i18n: {
+      en: { title: '', subtitle: '', footer: '', getStarted: '', inputPlaceholder: 'Écrivez votre rêve…' }
+    }
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+      localStorage.removeItem('userName');
+      localStorage.removeItem('userEmail');
+      window.location.href = 'index.html';
+    }
+  });
+</script>
 </body>
 </html>
+
