@@ -90,8 +90,8 @@
 
     // 4) messages d’accueil — tableau de strings (évite React error #185)
     const welcome = [
-      `Bonjour ${userName || 'cher visiteur'} 👋, bienvenue dans votre espace d’interprétation des rêves.` +
-      (userEmail ? ` Vous êtes connecté avec l’email : ${userEmail}.` : '')
+      `Hey ${userName || 'cher visiteur'} 👋, cest bien votre prénom.` +
+      (userEmail ? ` et apres email ? : ${userEmail}.` : '') + 'Raconter moi votre reve Svp'
     ];
 
     // 5) création du chat n8n
@@ -137,5 +137,6 @@ setTimeout(() => {
   </script>
 </body>
 </html>
+
 
 
