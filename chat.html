@@ -16,10 +16,13 @@
       background-size: cover;
     }
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
     html, body { height:100%; width:100%; display:flex; flex-direction:column; overflow:hidden; }
+
     header {
       background: rgba(110,142,251,0.9); color:#fff; padding:15px 20px; font-size:1.3rem;
-      display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 15px rgba(0,0,0,.2); z-index:10; flex:0 0 auto;
+      display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 15px rgba(0,0,0,.2); z-index:10;
+      flex:0 0 auto;
     }
     .logo { display:flex; align-items:center; gap:10px; }
     .logo i { font-size:1.8rem; }
@@ -27,13 +30,24 @@
     .user-avatar { width:35px; height:35px; border-radius:50%; background:#5a7dfa; display:flex; align-items:center; justify-content:center; font-weight:bold; color:#fff; }
     .logout-btn { background:rgba(255,255,255,.2); border:none; color:#fff; padding:8px 15px; border-radius:20px; cursor:pointer; font-size:.9rem; display:flex; align-items:center; gap:6px; }
     .logout-btn:hover { background:rgba(255,255,255,.3); }
+
     #chat-container { position:relative; flex:1 1 auto; width:100%; height:100%; }
     #chat-container, #n8n-chat { width:100%; height:100%; }
+
     #chat-container {
-      --chat--header-height: 0; --chat--header--padding: 0; --chat--header--border-top: none; --chat--header--border-bottom: none;
-      --chat--heading--font-size: 0; --chat--subtitle--line-height: 0;
+      --chat--header-height: 0;
+      --chat--header--padding: 0;
+      --chat--header--border-top: none;
+      --chat--header--border-bottom: none;
+      --chat--heading--font-size: 0;
+      --chat--subtitle--line-height: 0;
     }
-    @media (max-width:768px) { header { padding:12px 15px; font-size:1.1rem; } .user-info span { display:none; } .logo span { font-size:1.1rem; } }
+
+    @media (max-width:768px) {
+      header { padding:12px 15px; font-size:1.1rem; }
+      .user-info span { display:none; }
+      .logo span { font-size:1.1rem; }
+    }
   </style>
 </head>
 <body>
@@ -59,6 +73,7 @@
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
+    // Récupération des infos utilisateur
     const userName  = localStorage.getItem('userName')  || 'Utilisateur';
     const userEmail = localStorage.getItem('userEmail') || '';
     document.getElementById('userNameDisplay').textContent = userName;
@@ -69,23 +84,26 @@
     const qs = new URLSearchParams({ userName, userEmail }).toString();
     const webhookUrl = `${baseWebhook}?${qs}`;
 
+    // Initialisation du chat avec métadonnées (prénom + email envoyés à n8n)
     createChat({
       target: '#n8n-chat',
       mode: 'fullscreen',
-      webhookUrl, // ← avec query
-      // metadata officiel (si la lib les transmet dans le payload)
-      metadata: { userName, userEmail },
+      webhookUrl, // ← avec query fallback
+      metadata: { 
+        userName,
+        userEmail
+      },
       showWelcomeScreen: false,
       initialMessages: [
         `Bonjour ${userName} 👋, bienvenue dans votre espace d’interprétation des rêves.
-         Vous êtes connecté avec l’email : ${userEmail}.
-         
+         ${userEmail ? 'Vous êtes connecté avec l’email : ' + userEmail + '.' : ''}`
       ],
       i18n: {
         en: { title: '', subtitle: '', footer: '', getStarted: '', inputPlaceholder: 'Écrivez votre rêve…' }
       }
     });
 
+    // Déconnexion
     document.getElementById('logoutBtn').addEventListener('click', () => {
       if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
         localStorage.removeItem('userName');
