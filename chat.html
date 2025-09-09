@@ -20,7 +20,12 @@
 
     html,body{height:100%;width:100%;display:flex;flex-direction:column;overflow:hidden}
 
+    /* ----- BANNIÈRE FIXE ----- */
     header{
+      position: fixed; /* fixe la bannière */
+      top: 0;
+      left: 0;
+      right: 0;
       background:rgba(110,142,251,0.9);color:#fff;padding:15px 20px;font-size:1.3rem;
       display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 15px rgba(0,0,0,.2);z-index:10;
       flex:0 0 auto;
@@ -32,7 +37,10 @@
     .logout-btn{background:rgba(255,255,255,.2);border:none;color:#fff;padding:8px 15px;border-radius:20px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;gap:6px}
     .logout-btn:hover{background:rgba(255,255,255,.3)}
 
-    #chat-container{position:relative;flex:1 1 auto;width:100%;height:100%}
+    #chat-container{
+      position:relative;flex:1 1 auto;width:100%;height:100%;
+      margin-top:70px; /* espace sous la bannière fixe (≈ sa hauteur) */
+    }
     #chat-container,#n8n-chat{width:100%;height:100%}
 
     /* masque le header interne du widget */
@@ -117,27 +125,23 @@
         window.location.href = 'index.html';
       }
     });
-    // 🔒 Fermeture auto après 90 secondes
-setTimeout(() => {
-  const chat = document.getElementById("chat-container");
-  if (chat) {
-    chat.innerHTML = `
-      <div style="text-align:center; padding:50px; font-size:1.2rem; color:#333;">
-        🌙 La session est terminée.<br>
-        Merci pour votre visite chez Madame Rêve.<br><br>
-        <button onclick="window.location.href='index.html'" 
-          style="padding:10px 20px; border:none; border-radius:6px; background:#6e8efb; color:#fff; cursor:pointer;">
-          Revenir à l'accueil
-        </button>
-      </div>
-    `;
-  }
-}, 90 * 10000); // 1.5 minutes = 90 secondes
 
+    // 🔒 Fermeture auto après 90 secondes
+    setTimeout(() => {
+      const chat = document.getElementById("chat-container");
+      if (chat) {
+        chat.innerHTML = `
+          <div style="text-align:center; padding:50px; font-size:1.2rem; color:#333;">
+            🌙 La session est terminée.<br>
+            Merci pour votre visite chez Madame Rêve.<br><br>
+            <button onclick="window.location.href='index.html'" 
+              style="padding:10px 20px; border:none; border-radius:6px; background:#6e8efb; color:#fff; cursor:pointer;">
+              Revenir à l'accueil
+            </button>
+          </div>
+        `;
+      }
+    }, 90 * 10000); // 1.5 minutes = 90 secondes
   </script>
 </body>
 </html>
-
-
-
-
