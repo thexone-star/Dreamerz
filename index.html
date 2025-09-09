@@ -428,7 +428,7 @@
       guideBtn.innerHTML = `<i class="fa fa-paper-plane"></i> ${labelSending}`;
 
       try{
-        const res = await fetch("https://monkfish-huge-widely.ngrok-free.app/webhook/f6b2f8f3-eea0-4b56-b707-b0e73a2de1d8", {
+        const res = await fetch("https://monkfish-huge-widely.ngrok-free.app/webhook-test/f6b2f8f3-eea0-4b56-b707-b0e73a2de1d8", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -460,3 +460,4 @@
   </script>
 </body>
 </html>
+
