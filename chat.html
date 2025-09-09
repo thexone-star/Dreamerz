@@ -9,6 +9,9 @@
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet"/>
 
   <style>
+    /* Hauteur de bannière (desktop) */
+    :root { --header-h: 68px; }
+
     #n8n-chat{
       --chat--body--background: rgba(255,255,255,0.2);
       --chat--message--user--background: #44405370;
@@ -18,17 +21,20 @@
     }
     *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
 
-    html,body{height:100%;width:100%;display:flex;flex-direction:column;overflow:hidden}
+    html,body{height:100%;width:100%;overflow:hidden}
 
     /* ----- BANNIÈRE FIXE ----- */
     header{
       position: fixed; /* fixe la bannière */
-      top: 0;
-      left: 0;
-      right: 0;
-      background:rgba(110,142,251,0.9);color:#fff;padding:15px 20px;font-size:1.3rem;
-      display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 15px rgba(0,0,0,.2);z-index:10;
-      flex:0 0 auto;
+      top: 0; left: 0; right: 0;
+      height: var(--header-h);
+      background: rgba(110,142,251,0.9);
+      color:#fff;
+      padding: 0 20px;
+      font-size:1.3rem;
+      display:flex;justify-content:space-between;align-items:center;
+      box-shadow:0 2px 15px rgba(0,0,0,.2);
+      z-index: 1000;
     }
     .logo{display:flex;align-items:center;gap:10px}
     .logo i{font-size:1.8rem}
@@ -37,11 +43,15 @@
     .logout-btn{background:rgba(255,255,255,.2);border:none;color:#fff;padding:8px 15px;border-radius:20px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;gap:6px}
     .logout-btn:hover{background:rgba(255,255,255,.3)}
 
+    /* ----- ZONE CHAT OCCUPE TOUT L'ESPACE RESTANT ----- */
     #chat-container{
-      position:relative;flex:1 1 auto;width:100%;height:100%;
-      margin-top:70px; /* espace sous la bannière fixe (≈ sa hauteur) */
+      position: fixed;
+      top: var(--header-h);   /* commence juste sous la bannière */
+      left: 0; right: 0; bottom: 0; /* s’étend jusqu’en bas */
+      width: 100%;
+      height: auto;          /* la hauteur est déduite par top/bottom */
     }
-    #chat-container,#n8n-chat{width:100%;height:100%}
+    #n8n-chat{width:100%;height:100%}
 
     /* masque le header interne du widget */
     #chat-container{
@@ -54,7 +64,8 @@
     }
 
     @media (max-width:768px){
-      header{padding:12px 15px;font-size:1.1rem}
+      :root { --header-h: 56px; }      /* bannière un peu plus compacte sur mobile */
+      header{padding:0 15px;font-size:1.1rem}
       .user-info span{display:none}
       .logo span{font-size:1.1rem}
     }
@@ -98,7 +109,8 @@
 
     // 4) messages d’accueil — tableau de strings (évite React error #185)
     const welcome = [
-      `Hey ${userName || 'cher visiteur'} 👋'
+      `Hey ${userName || 'cher visiteur'} 👋, cest bien votre prénom.` +
+      (userEmail ? ` et apres email ? : ${userEmail}.` : '') + '  Raconter moi votre rêve Svp'
     ];
 
     // 5) création du chat n8n
@@ -144,4 +156,3 @@
   </script>
 </body>
 </html>
-
