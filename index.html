@@ -5,54 +5,551 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Madame Rêve - Accueil</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    #policyLabel { font-size: 1rem; color: #444; }
-    html, body { height:100%; width:100%; display:flex; flex-direction:column; justify-content:center; align-items:center; background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d); }
-    header { position:absolute; top:0; left:0; right:0; background: rgba(110,142,251,0.9); color:#fff; padding:15px 20px; font-size:1.3rem; display:flex; justify-content:center; align-items:center; box-shadow:0 2px 15px rgba(0,0,0,.2); }
-    .box { background: rgba(255,255,255,0.5); padding:30px 25px; border-radius:15px; box-shadow:0 4px 20px rgba(0,0,0,0.2); width:390px; text-align:center; margin-top:80px; }
-    h2 { margin-bottom:10px; color:#333; } p { margin-bottom:15px; color:#555; }
-    input { width:100%; padding:10px; margin:10px 0; border:1px solid #ccc; border-radius:8px; font-size:1rem; }
-    label { display:flex; align-items:center; gap:8px; font-size:0.9rem; margin:10px 0; color:#444; text-align:left; }
-    a { color:#6e8efb; text-decoration:none; font-weight:600; }
-    a:hover { text-decoration:underline; }
-    button { padding:12px; width:95%; background:#6e8efb; color:#fff; border:none; border-radius:8px; font-size:1rem; cursor:pointer; margin-top:10px; transition: background 0.3s; }
-    button:hover { background:#5a7dfa; } button:disabled { background:#aaa; cursor:not-allowed; }
+    :root{
+      --bg-grad: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+      --card-radius: 18px;
+      --shadow: 0 10px 25px rgba(0,0,0,.18);
+      --blue: #6e8efb;
+      --blue-strong:#5a7dfa;
+      --violet-soft: rgba(255,255,255,0.60);
+      --mint: #e8fff3;
+      --peach:#fff3e8;
+      --text:#2b2b2b;
+      --muted:#666;
+      --ok:#1aa06d;
+      --danger:#d9534f;
+    }
+
+    *{ margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    html, body {
+      height:100%; width:100%;
+      background: var(--bg-grad);
+      color: var(--text);
+    }
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:5;
+      background: rgba(110,142,251,0.92);
+      color:#fff;
+      padding:14px 18px;
+      display:flex; align-items:center; justify-content:space-between;
+      box-shadow:0 6px 18px rgba(0,0,0,.18);
+    }
+    .brand{ display:flex; align-items:center; gap:10px; font-size:1.15rem; font-weight:600; }
+    .lang-switch{
+      display:flex; align-items:center; gap:8px;
+      background:rgba(255,255,255,.18);
+      padding:6px; border-radius:999px;
+    }
+    .lang-switch button{
+      border:none; background:transparent; color:#fff; padding:8px 12px; border-radius:999px; cursor:pointer; font-weight:600;
+    }
+    .lang-switch button.active{ background:#fff; color:#3949ab; }
+
+    /* Main layout */
+    .wrap{
+      max-width:1100px; margin:28px auto 60px; padding:0 16px;
+    }
+    .intro{
+      text-align:center; color:#fff; margin-bottom:18px;
+    }
+    .intro h1{ font-weight:800; letter-spacing:.3px; }
+    .intro p{ opacity:.95; margin-top:6px; }
+
+    .grid{
+      display:grid; grid-template-columns: 1fr 1fr; gap:18px;
+      align-items:start;
+    }
+    @media (max-width: 940px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    /* Cards */
+    .card{
+      border-radius: var(--card-radius);
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(6px);
+    }
+    .card-head{
+      display:flex; align-items:center; gap:10px;
+      padding:14px 16px; color:#fff; font-weight:700;
+      font-size:1.05rem;
+    }
+    .card-body{ padding:18px; }
+
+    /* Two distinct moods */
+    .card.chat{ background: var(--violet-soft); }
+    .card.chat .card-head{ background: #6e8efbd8; }
+    .card.ebook{ background: #ffffff; }
+    .card.ebook .card-head{ background: #00a67a; }
+
+    /* Inputs */
+    .field{
+      margin: 10px 0 14px;
+    }
+    .field label{
+      display:block; font-size:.92rem; color:#333; margin-bottom:6px; font-weight:600;
+    }
+    .input{
+      width:100%; padding:12px 12px; border-radius:12px;
+      border:1px solid #d9d9d9; font-size:1rem; background:#fff;
+      outline:none;
+    }
+    .input:focus{ border-color:#a7b6ff; box-shadow:0 0 0 3px rgba(110,142,251,.15); }
+
+    /* Checkbox row (alignment fix) */
+    .policy-row{
+      display:flex; align-items:center; gap:10px;
+      margin:10px 0 4px;
+      color:#444; font-size:.95rem;
+    }
+    .policy-row input[type="checkbox"]{ width:18px; height:18px; cursor:pointer; }
+    .policy-row a{ color:var(--blue); font-weight:700; text-decoration:none; }
+    .policy-row a:hover{ text-decoration:underline; }
+
+    /* Buttons */
+    .btn{
+      width:100%; padding:12px 14px; border:none; border-radius:12px;
+      cursor:pointer; font-weight:800; letter-spacing:.2px; font-size:1rem;
+      transition: transform .05s ease, box-shadow .2s ease, background .2s ease;
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    }
+    .btn:active{ transform: translateY(1px); }
+    .btn-primary{ background:var(--blue); color:#fff; box-shadow:0 6px 14px rgba(110,142,251,.35); }
+    .btn-primary:hover{ background:var(--blue-strong); }
+    .btn-success{ background:#00a67a; color:#fff; box-shadow:0 6px 14px rgba(0,166,122,.28); }
+    .btn-success:hover{ filter: brightness(.95); }
+    .btn[disabled]{ opacity:.6; cursor:not-allowed; box-shadow:none; }
+
+    .helper{ font-size:.85rem; color:var(--muted); margin-top:6px; }
+
+    /* Bottom sections */
+    .sections{ margin-top:22px; }
+    .section{
+      background: rgba(255,255,255,.86);
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow);
+      padding:18px;
+      margin-bottom:14px;
+    }
+    .section h3{ margin-bottom:8px; color:#222; }
+    .benefits ul{ display:grid; grid-template-columns: 1fr 1fr; gap:8px 16px; }
+    @media (max-width: 640px){ .benefits ul{ grid-template-columns: 1fr; } }
+    .faq details{ background:#fff; border:1px solid #eee; border-radius:12px; padding:12px 14px; margin:8px 0; }
+    .faq summary{ cursor:pointer; font-weight:700; color:#222; }
+    .faq p{ margin-top:8px; color:#555; }
+
+    footer{
+      text-align:center; color:#fff; opacity:.95; margin:22px 0 40px;
+    }
+    footer a{ color:#fff; font-weight:700; text-decoration:underline; }
+
+    /* Small badges */
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      background:rgba(255,255,255,.2); color:#fff; padding:6px 10px; border-radius:999px; font-size:.85rem;
+    }
   </style>
 </head>
+
 <body>
-  <header><i class="fas fa-cloud-moon"></i>&nbsp;Madame Rêve - Interprète des Rêves</header>
+  <header>
+    <div class="brand">
+      <i class="fas fa-cloud-moon"></i>
+      <span id="t-site-name">Madame Rêve — Interprète des Rêves</span>
+    </div>
 
-  <div class="box">
-    <h2>Bienvenue 👋</h2>
-    <p>Veuillez vous identifier pour continuer</p>
+    <!-- Switch FR/EN -->
+    <div class="lang-switch" aria-label="Sélecteur de langue">
+      <button type="button" id="btn-fr" class="active">FR</button>
+      <button type="button" id="btn-en">EN</button>
+    </div>
+  </header>
 
-    <form onsubmit="goToChat(event)">
-      <input type="text" id="name" placeholder="Votre prénom" required>
-      <input type="email" id="email" placeholder="Votre email" required>
+  <div class="wrap">
+    <div class="intro">
+      <h1 id="t-hero-title">Explorez le sens de vos rêves — avec douceur et clarté</h1>
+      <p id="t-hero-sub">Entrez dans le chat pour une interprétation bienveillante, ou recevez notre guide sommeil gratuit par email.</p>
+      <div style="margin-top:10px;">
+        <span class="badge"><i class="fa fa-shield-halved"></i> <span id="t-privacy-first">Confidentialité d’abord</span></span>
+      </div>
+    </div>
 
-      <label id="policyLabel">
-        <input type="checkbox" id="policyCheck">
-        J’accepte les <a href="policies.html" target="_blank">politiques</a>
-      </label>
+    <!-- Two parallel cards -->
+    <div class="grid">
+      <!-- CHAT CARD (code chat conservé : mêmes IDs et même JS) -->
+      <section class="card chat" aria-labelledby="chat-head">
+        <div class="card-head" id="chat-head">
+          <i class="fa fa-comments"></i>
+          <span id="t-chat-title">Accéder au chat d’interprétation</span>
+        </div>
+        <div class="card-body">
+          <form onsubmit="goToChat(event)">
+            <div class="field">
+              <label for="name" id="t-label-firstname">Prénom</label>
+              <input class="input" type="text" id="name" placeholder="Votre prénom" required>
+            </div>
 
-      <button type="submit" id="submitBtn" disabled>Entrer</button>
-    </form>
+            <div class="field">
+              <label for="email" id="t-label-email">Email</label>
+              <input class="input" type="email" id="email" placeholder="Votre email" required>
+            </div>
+
+            <!-- Garder la structure/IDs pour compatibilité : policyLabel englobe l’input -->
+            <label id="policyLabel" class="policy-row">
+              <input type="checkbox" id="policyCheck">
+              <span id="t-chat-policy">
+                J’accepte la <a href="policies.html" target="_blank" rel="noopener">politique de confidentialité</a>
+              </span>
+            </label>
+
+            <button type="submit" id="submitBtn" class="btn btn-primary" disabled>
+              <i class="fa fa-door-open"></i>
+              <span id="t-btn-enter">Entrer dans le chat</span>
+            </button>
+            <p class="helper" id="t-chat-helper">Votre prénom et votre email seront utilisés dans le chat et ne seront pas partagés.</p>
+          </form>
+        </div>
+      </section>
+
+      <!-- EBOOK CARD -->
+      <section class="card ebook" aria-labelledby="ebook-head">
+        <div class="card-head" id="ebook-head">
+          <i class="fa fa-book"></i>
+          <span id="t-ebook-title">Recevoir le guide du sommeil (par email)</span>
+        </div>
+        <div class="card-body">
+          <form id="guideForm" onsubmit="getGuide(event)">
+            <div class="field">
+              <label for="guideEmail" id="t-label-guide-email">Email</label>
+              <input class="input" type="email" id="guideEmail" placeholder="votre@email.com" required>
+            </div>
+
+            <div class="field">
+              <label for="guideLang" id="t-label-guide-lang">Langue souhaitée</label>
+              <select class="input" id="guideLang">
+                <option value="fr">Français (FR)</option>
+                <option value="en">English (EN)</option>
+              </select>
+            </div>
+
+            <div class="policy-row">
+              <input type="checkbox" id="guidePolicyCheck">
+              <label for="guidePolicyCheck" id="t-ebook-policy">
+                J’accepte la <a href="policies.html" target="_blank" rel="noopener">politique de confidentialité</a>.
+              </label>
+            </div>
+
+            <button type="submit" id="guideBtn" class="btn btn-success" disabled>
+              <i class="fa fa-download"></i>
+              <span id="t-btn-guide">Télécharger le guide du sommeil (par email)</span>
+            </button>
+            <p class="helper" id="t-ebook-helper">Nous vous enverrons un email contenant un lien de téléchargement sécurisé.</p>
+          </form>
+        </div>
+      </section>
+    </div>
+
+    <!-- Bottom info sections -->
+    <div class="sections">
+      <section class="section benefits" aria-labelledby="benefits-head">
+        <h3 id="benefits-head"><i class="fa fa-sparkles"></i> <span id="t-benefits-title">Bénéfices</span></h3>
+        <ul>
+          <li id="t-b1">Interprétation personnalisée et bienveillante</li>
+          <li id="t-b2">Guide sommeil gratuit</li>
+          <li id="t-b3">Confidentialité et respect de vos données</li>
+          <li id="t-b4">Accès 24/7 depuis votre navigateur</li>
+        </ul>
+      </section>
+
+      <section class="section faq" aria-labelledby="faq-head">
+        <h3 id="faq-head"><i class="fa fa-circle-question"></i> <span id="t-faq-title">Mini-FAQ</span></h3>
+
+        <details>
+          <summary id="t-q1">Est-ce que mes données sont enregistrées ?</summary>
+          <p id="t-a1">Vous pouvez utiliser le chat sans fournir d’informations sensibles. Si vous renseignez votre email pour le guide, il est stocké uniquement pour l’envoi et les communications liées.</p>
+        </details>
+
+        <details>
+          <summary id="t-q2">Est-ce un avis médical ?</summary>
+          <p id="t-a2">Non, ce service ne remplace pas un avis médical ou psychologique. En cas de détresse ou d’anxiété, consultez un professionnel.</p>
+        </details>
+      </section>
+
+      <section class="section" aria-labelledby="legal-head">
+        <h3 id="legal-head"><i class="fa fa-scale-balanced"></i> <span id="t-legal-title">Mentions légales & RGPD</span></h3>
+        <p id="t-legal-text">
+          Ce site respecte votre vie privée. Consultez la <a href="policies.html" target="_blank" rel="noopener">politique de confidentialité</a> et les <a href="mentions-legales.html" target="_blank" rel="noopener">mentions légales</a>.
+        </p>
+      </section>
+    </div>
+
+    <footer>
+      © <span id="t-foot-name">Madame Rêve</span> — <span id="t-foot-note">Interprétations par IA. Ne remplace pas un avis médical.</span>
+    </footer>
   </div>
 
   <script>
+    // =========
+    // i18n FR/EN
+    // =========
+    const T = {
+      fr: {
+        siteName: "Madame Rêve — Interprète des Rêves",
+        heroTitle: "Explorez le sens de vos rêves — avec douceur et clarté",
+        heroSub: "Entrez dans le chat pour une interprétation bienveillante, ou recevez notre guide sommeil gratuit par email.",
+        privacyFirst: "Confidentialité d’abord",
+
+        chatTitle: "Accéder au chat d’interprétation",
+        labelFirstname: "Prénom",
+        labelEmail: "Email",
+        chatPolicy: 'J’accepte la <a href="policies.html" target="_blank" rel="noopener">politique de confidentialité</a>',
+        btnEnter: "Entrer dans le chat",
+        chatHelper: "Votre prénom et votre email seront utilisés dans le chat et ne seront pas partagés.",
+
+        ebookTitle: "Recevoir le guide du sommeil (par email)",
+        labelGuideEmail: "Email",
+        labelGuideLang: "Langue souhaitée",
+        ebookPolicy: 'J’accepte la <a href="policies.html" target="_blank" rel="noopener">politique de confidentialité</a>.',
+        btnGuide: "Télécharger le guide du sommeil (par email)",
+        ebookHelper: "Nous vous enverrons un email contenant un lien de téléchargement sécurisé.",
+
+        benefitsTitle: "Bénéfices",
+        b1: "Interprétation personnalisée et bienveillante",
+        b2: "Guide sommeil gratuit",
+        b3: "Confidentialité et respect de vos données",
+        b4: "Accès 24/7 depuis votre navigateur",
+
+        faqTitle: "Mini-FAQ",
+        q1: "Est-ce que mes données sont enregistrées ?",
+        a1: "Vous pouvez utiliser le chat sans fournir d’informations sensibles. Si vous renseignez votre email pour le guide, il est stocké uniquement pour l’envoi et les communications liées.",
+        q2: "Est-ce un avis médical ?",
+        a2: "Non, ce service ne remplace pas un avis médical ou psychologique. En cas de détresse ou d’anxiété, consultez un professionnel.",
+
+        legalTitle: "Mentions légales & RGPD",
+        legalText: 'Ce site respecte votre vie privée. Consultez la <a href="policies.html" target="_blank" rel="noopener">politique de confidentialité</a> et les <a href="mentions-legales.html" target="_blank" rel="noopener">mentions légales</a>.',
+        footName: "Madame Rêve",
+        footNote: "Interprétations par IA. Ne remplace pas un avis médical."
+      },
+      en: {
+        siteName: "Madame Rêve — Dream Interpreter",
+        heroTitle: "Explore the meaning of your dreams—with warmth and clarity",
+        heroSub: "Open the chat for a gentle interpretation, or get our free sleep guide by email.",
+        privacyFirst: "Privacy first",
+
+        chatTitle: "Access the interpretation chat",
+        labelFirstname: "First name",
+        labelEmail: "Email",
+        chatPolicy: 'I accept the <a href="policies.html" target="_blank" rel="noopener">privacy policy</a>',
+        btnEnter: "Enter the chat",
+        chatHelper: "Your first name and email are used in the chat and won’t be shared.",
+
+        ebookTitle: "Get the Sleep Guide (by email)",
+        labelGuideEmail: "Email",
+        labelGuideLang: "Preferred language",
+        ebookPolicy: 'I accept the <a href="policies.html" target="_blank" rel="noopener">privacy policy</a>.',
+        btnGuide: "Download the Sleep Guide (by email)",
+        ebookHelper: "We will send you an email with a secure download link.",
+
+        benefitsTitle: "Benefits",
+        b1: "Personalized and empathetic interpretation",
+        b2: "Free sleep guide",
+        b3: "Privacy & data respect",
+        b4: "24/7 access from your browser",
+
+        faqTitle: "Mini-FAQ",
+        q1: "Are my data stored?",
+        a1: "You can use the chat without sharing sensitive data. If you provide your email for the guide, it’s stored only for sending it and related communications.",
+        q2: "Is this medical advice?",
+        a2: "No, this service does not replace medical or psychological advice. If you feel distressed, please consult a professional.",
+
+        legalTitle: "Legal & Privacy",
+        legalText: 'We respect your privacy. See our <a href="policies.html" target="_blank" rel="noopener">privacy policy</a> and <a href="mentions-legales.html" target="_blank" rel="noopener">legal notice</a>.',
+        footName: "Madame Rêve",
+        footNote: "AI-generated interpretations. Not a medical service."
+      }
+    };
+
+    const els = {
+      siteName: document.getElementById('t-site-name'),
+      heroTitle: document.getElementById('t-hero-title'),
+      heroSub: document.getElementById('t-hero-sub'),
+      privacyFirst: document.getElementById('t-privacy-first'),
+
+      chatTitle: document.getElementById('t-chat-title'),
+      labelFirstname: document.getElementById('t-label-firstname'),
+      labelEmail: document.getElementById('t-label-email'),
+      chatPolicy: document.getElementById('t-chat-policy'),
+      btnEnter: document.getElementById('t-btn-enter'),
+      chatHelper: document.getElementById('t-chat-helper'),
+
+      ebookTitle: document.getElementById('t-ebook-title'),
+      labelGuideEmail: document.getElementById('t-label-guide-email'),
+      labelGuideLang: document.getElementById('t-label-guide-lang'),
+      ebookPolicy: document.getElementById('t-ebook-policy'),
+      btnGuide: document.getElementById('t-btn-guide'),
+      ebookHelper: document.getElementById('t-ebook-helper'),
+
+      benefitsTitle: document.getElementById('t-benefits-title'),
+      b1: document.getElementById('t-b1'),
+      b2: document.getElementById('t-b2'),
+      b3: document.getElementById('t-b3'),
+      b4: document.getElementById('t-b4'),
+
+      faqTitle: document.getElementById('t-faq-title'),
+      q1: document.getElementById('t-q1'),
+      a1: document.getElementById('t-a1'),
+      q2: document.getElementById('t-q2'),
+      a2: document.getElementById('t-a2'),
+
+      legalTitle: document.getElementById('t-legal-title'),
+      legalText: document.getElementById('t-legal-text'),
+      footName: document.getElementById('t-foot-name'),
+      footNote: document.getElementById('t-foot-note'),
+    };
+
+    const btnFR = document.getElementById('btn-fr');
+    const btnEN = document.getElementById('btn-en');
+
+    function setLang(lang){
+      const t = T[lang] || T.fr;
+      // Simple text
+      els.siteName.textContent = t.siteName;
+      els.heroTitle.textContent = t.heroTitle;
+      els.heroSub.textContent = t.heroSub;
+      els.privacyFirst.textContent = t.privacyFirst;
+
+      els.chatTitle.textContent = t.chatTitle;
+      els.labelFirstname.textContent = t.labelFirstname;
+      els.labelEmail.textContent = t.labelEmail;
+      els.btnEnter.textContent = t.btnEnter;
+      els.chatHelper.textContent = t.chatHelper;
+
+      els.ebookTitle.textContent = t.ebookTitle;
+      els.labelGuideEmail.textContent = t.labelGuideEmail;
+      els.labelGuideLang.textContent = t.labelGuideLang;
+      els.btnGuide.textContent = t.btnGuide;
+      els.ebookHelper.textContent = t.ebookHelper;
+
+      els.benefitsTitle.textContent = t.benefitsTitle;
+      els.b1.textContent = t.b1;
+      els.b2.textContent = t.b2;
+      els.b3.textContent = t.b3;
+      els.b4.textContent = t.b4;
+
+      els.faqTitle.textContent = t.faqTitle;
+      els.q1.textContent = t.q1;
+      els.a1.textContent = t.a1;
+      els.q2.textContent = t.q2;
+      els.a2.textContent = t.a2;
+
+      els.legalTitle.textContent = t.legalTitle;
+      els.legalText.innerHTML = t.legalText; // liens inclus
+      els.footName.textContent = t.footName;
+      els.footNote.textContent = t.footNote;
+
+      // Elements including HTML (policy lines)
+      els.chatPolicy.innerHTML = t.chatPolicy;
+      els.ebookPolicy.innerHTML = t.ebookPolicy;
+
+      // placeholders
+      document.getElementById('name').placeholder = (lang === 'en') ? 'Your first name' : 'Votre prénom';
+      document.getElementById('email').placeholder = (lang === 'en') ? 'Your email' : 'Votre email';
+      document.getElementById('guideEmail').placeholder = (lang === 'en') ? 'your@email.com' : 'votre@email.com';
+
+      // select lang default
+      document.getElementById('guideLang').value = lang;
+
+      // visual state
+      btnFR.classList.toggle('active', lang==='fr');
+      btnEN.classList.toggle('active', lang==='en');
+      localStorage.setItem('lang', lang);
+      document.documentElement.lang = lang;
+    }
+
+    btnFR.addEventListener('click', () => setLang('fr'));
+    btnEN.addEventListener('click', () => setLang('en'));
+
+    // init lang
+    setLang(localStorage.getItem('lang') || 'fr');
+
+    // =========
+    // CHAT (logique conservée)
+    // =========
     const policyCheck = document.getElementById("policyCheck");
     const submitBtn = document.getElementById("submitBtn");
     policyCheck.addEventListener("change", () => { submitBtn.disabled = !policyCheck.checked; });
 
     function goToChat(e) {
       e.preventDefault();
-      if (!policyCheck.checked) { alert("Vous devez accepter les politiques avant de continuer !"); return; }
+      if (!policyCheck.checked) { alert((localStorage.getItem('lang')==='en') ? "Please accept the privacy policy before continuing." : "Vous devez accepter la politique avant de continuer !"); return; }
       const name = document.getElementById("name").value.trim();
       const email = document.getElementById("email").value.trim();
       localStorage.setItem("userName", name);
       localStorage.setItem("userEmail", email);
       window.location.href = "chat.html";
+    }
+
+    // =========
+    // GUIDE (webhook n8n + Brevo côté serveur)
+    // =========
+    const guideCheck = document.getElementById("guidePolicyCheck");
+    const guideBtn   = document.getElementById("guideBtn");
+    guideCheck.addEventListener("change", () => { guideBtn.disabled = !guideCheck.checked; });
+
+    async function getGuide(e){
+      e.preventDefault();
+      if (!guideCheck.checked) {
+        alert((localStorage.getItem('lang')==='en') ? "Please accept the privacy policy before receiving the guide." : "Merci d'accepter la politique de confidentialité pour recevoir le guide.");
+        return;
+      }
+
+      const emailGuide = document.getElementById("guideEmail").value.trim();
+      const lang = document.getElementById("guideLang").value || (localStorage.getItem('lang') || 'fr');
+      const firstName = (document.getElementById("name")?.value || '').trim(); // si déjà saisi à gauche
+
+      const labelSending = (lang==='en') ? "Sending..." : "Envoi...";
+      const labelDone    = (lang==='en') ? "Sent!" : "Envoyé !";
+      const labelBtn     = (lang==='en') ? "Download the Sleep Guide (by email)" : "Télécharger le guide du sommeil (par email)";
+
+      guideBtn.disabled = true;
+      const prev = guideBtn.innerHTML;
+      guideBtn.innerHTML = `<i class="fa fa-paper-plane"></i> ${labelSending}`;
+
+      try{
+        const res = await fetch("https://monkfish-huge-widely.ngrok-free.app/webhook/f6b2f8f3-eea0-4b56-b707-b0e73a2de1d8", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: emailGuide,
+            firstName,
+            consent: true,
+            source: "index_ebook_form",
+            lang,
+            timestamp: new Date().toISOString()
+          })
+        });
+
+        const data = await res.json().catch(()=>({}));
+        if(res.ok){
+          guideBtn.innerHTML = `<i class="fa fa-check"></i> ${labelDone}`;
+          alert((lang==='en') ? "Thank you! The guide will be sent by email." : "Merci ! Le guide va vous être envoyé par email.");
+          // Remettre le bouton après 2s
+          setTimeout(()=>{ guideBtn.innerHTML = `<i class="fa fa-download"></i> ${labelBtn}`; guideBtn.disabled = false; }, 1600);
+          (document.getElementById("guideForm")).reset();
+        }else{
+          throw new Error(data?.message || "Request failed");
+        }
+      }catch(err){
+        console.error(err);
+        alert((lang==='en') ? "Oops, sending failed. Please try again in a moment." : "Oups, l’envoi a échoué. Réessayez dans un instant.");
+        guideBtn.innerHTML = prev;
+        guideBtn.disabled = false;
+      }
     }
   </script>
 </body>
