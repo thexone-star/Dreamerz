@@ -3,79 +3,295 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Politiques et Conditions - Madame Rêve</title>
+  <title>Politiques & Conditions – Madame Rêve</title>
 
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          boxShadow: { soft: '0 10px 25px rgba(0,0,0,.18)' },
+          colors: { brand: { indigo: '#6e8efb', indigoDark: '#5a7dfa', emerald: '#00a67a' } }
+        }
+      }
+    }
+  </script>
+
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <!-- Fade-in animations -->
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    html, body { height:100%; width:100%; background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d); }
-    body { display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:20px; color:#333; }
-    header { width:100%; background: rgba(110,142,251,0.9); color:#fff; padding:20px; font-size:1.5rem; text-align:center; border-radius:8px; box-shadow:0 2px 15px rgba(0,0,0,.2); margin-bottom:20px; }
-    .content { background: rgba(255,255,255,0.9); backdrop-filter: blur(8px); padding:25px; border-radius:12px; max-width:900px; width:100%; box-shadow:0 4px 20px rgba(0,0,0,0.2); }
-    h1 { font-size:1.8rem; margin-bottom:15px; color:#6e8efb; }
-    h2 { font-size:1.4rem; margin-top:20px; margin-bottom:10px; color:#4a4a4a; }
-    p, li { margin-bottom:10px; line-height:1.6; }
-    ul { margin-left:20px; }
-    a { color:#6e8efb; text-decoration:none; }
-    a:hover { text-decoration:underline; }
-    footer { margin-top:30px; text-align:center; font-size:0.85rem; color:#555; }
+    * { box-sizing: border-box; }
+    .reveal{ opacity:0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.show{ opacity:1; transform: none; }
   </style>
 </head>
-<body>
 
-  <header>Madame Rêve - Politiques et Conditions d’Utilisation</header>
+<body class="min-h-screen text-gray-900 bg-gradient-to-br from-indigo-900 via-rose-700 to-amber-300">
+  <!-- Header -->
+  <header class="sticky top-0 z-10 bg-brand-indigo/90 text-white shadow-lg">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2 font-semibold text-lg">
+        <i class="fas fa-cloud-moon"></i>
+        <span id="t-site-name">Madame Rêve — Interprète des Rêves</span>
+      </div>
+      <!-- Lang switch -->
+      <div class="flex items-center gap-1 bg-white/20 rounded-full p-1">
+        <button id="btn-fr" type="button" class="px-3 py-1.5 rounded-full font-semibold transition text-white bg-white/0">FR</button>
+        <button id="btn-en" type="button" class="px-3 py-1.5 rounded-full font-semibold transition text-white/90 hover:text-white">EN</button>
+      </div>
+    </div>
+  </header>
 
-  <div class="content">
-    <h1>Conditions Générales</h1>
-    <p>En utilisant ce site et le service d’interprétation des rêves proposé par Madame Rêve, vous acceptez ces conditions d’utilisation. Si vous n’êtes pas d’accord avec l’une de ces conditions, veuillez ne pas utiliser ce service.</p>
+  <main class="max-w-6xl mx-auto px-4 md:px-6">
+    <!-- Page title -->
+    <section class="reveal text-center text-white mt-8">
+      <h1 id="t-page-title" class="text-2xl md:text-3xl font-extrabold tracking-tight">
+        Politiques & Conditions d’utilisation
+      </h1>
+      <p id="t-page-sub" class="opacity-95 mt-2">
+        Transparence, respect et confidentialité : voici nos engagements.
+      </p>
+    </section>
 
-    <h2>1. Usage du chat</h2>
-    <p>Le chat est conçu pour l’interprétation ludique et informative des rêves. Toute utilisation abusive ou criminelle est strictement interdite. Vous vous engagez à ne pas :</p>
-    <ul>
-      <li>Contourner ou modifier le fonctionnement du chatbot ou tenter d’exploiter ses failles.</li>
-      <li>Utiliser le service à des fins illégales ou malveillantes.</li>
-      <li>Harceler ou importuner d’autres utilisateurs ou le système.</li>
-      <li>Publier ou partager des contenus offensants, criminels, ou protégés par la loi.</li>
-    </ul>
+    <!-- Content card -->
+    <section class="reveal mt-6 bg-white/90 backdrop-blur-md rounded-2xl shadow-soft p-5 md:p-7">
+      <div id="t-content" class="prose max-w-none prose-p:leading-relaxed prose-ul:list-disc prose-ul:pl-6">
+        <!-- Contenu FR par défaut (sera remplacé par T.en.content si EN) -->
+        <h2 class="text-xl font-semibold text-brand-indigo mb-2">Conditions Générales</h2>
+        <p>
+          En utilisant ce site et le service d’interprétation des rêves proposé par Madame Rêve,
+          vous acceptez ces conditions d’utilisation. Si vous n’êtes pas d’accord avec l’une de ces
+          conditions, veuillez ne pas utiliser ce service.
+        </p>
 
-    <h2>2. Limitation de responsabilité</h2>
-    <p>Les interprétations fournies par l’IA sont à but informatif et récréatif. Madame Rêve et ses services :</p>
-    <ul>
-      <li>Ne sont pas responsables de vos décisions ou actions basées sur les interprétations.</li>
-      <li>Ne remplacent pas un conseil professionnel (médical, juridique, psychologique, etc.).</li>
-      <li>Ne garantissent pas l’exactitude ou la pertinence des résultats.</li>
-      <li>Ne peuvent être tenus responsables des interruptions du service ou de pertes de données.</li>
-    </ul>
+        <h3 class="mt-5 text-lg font-semibold">1. Usage du chat</h3>
+        <p>Le chat est conçu pour l’interprétation ludique et informative des rêves. Vous vous engagez à ne pas&nbsp;:</p>
+        <ul class="mb-3">
+          <li>Contourner ou modifier le fonctionnement du chatbot, ou tenter d’exploiter ses failles.</li>
+          <li>Utiliser le service à des fins illégales ou malveillantes.</li>
+          <li>Harceler ou importuner d’autres utilisateurs ou le système.</li>
+          <li>Publier ou partager des contenus offensants, criminels, ou protégés par la loi.</li>
+        </ul>
 
-    <h2>3. Données personnelles et marketing</h2>
-    <p>Lorsque vous utilisez le service, certaines informations peuvent être collectées, telles que votre prénom et votre adresse email :</p>
-    <ul>
-      <li>Pour améliorer l’expérience utilisateur et personnaliser le chat.</li>
-      <li>Pour envoyer des propositions commerciales, des offres affiliées ou des publicités de partenaires.</li>
-      <li>Ces informations sont stockées de manière sécurisée et utilisées uniquement à ces fins.</li>
-      <li>Vous avez le droit de demander la suppression de vos données à tout moment.</li>
-    </ul>
+        <h3 class="mt-5 text-lg font-semibold">2. Limitation de responsabilité</h3>
+        <p>Les interprétations fournies par l’IA sont à but informatif et récréatif. Madame Rêve et ses services&nbsp;:</p>
+        <ul class="mb-3">
+          <li>Ne sont pas responsables de vos décisions ou actions basées sur les interprétations.</li>
+          <li>Ne remplacent pas un conseil professionnel (médical, juridique, psychologique, etc.).</li>
+          <li>Ne garantissent pas l’exactitude ou la pertinence des résultats.</li>
+          <li>Ne peuvent être tenus responsables des interruptions du service ou de pertes de données.</li>
+        </ul>
 
-    <h2>4. Cookies et suivi</h2>
-    <p>Le site peut utiliser des cookies et des outils d’analyse pour suivre l’utilisation et améliorer l’expérience utilisateur. Ces données sont anonymisées et ne permettent pas d’identifier personnellement un utilisateur.</p>
+        <h3 class="mt-5 text-lg font-semibold">3. Données personnelles & marketing</h3>
+        <p>Lorsque vous utilisez le service, certaines informations peuvent être collectées (p. ex. prénom, email)&nbsp;:</p>
+        <ul class="mb-3">
+          <li>Pour améliorer l’expérience et personnaliser le chat.</li>
+          <li>Pour envoyer des propositions commerciales, des offres affiliées ou des publicités de partenaires.</li>
+          <li>Ces informations sont stockées de manière sécurisée et utilisées uniquement à ces fins.</li>
+          <li>Vous pouvez demander la suppression de vos données à tout moment.</li>
+        </ul>
 
-    <h2>5. Sécurité et protection</h2>
-    <p>Nous mettons en place des mesures pour protéger le service et vos données contre toute exploitation malveillante. Toutefois, aucune sécurité n’est absolue et vous êtes responsable de la confidentialité de vos informations d’accès.</p>
+        <h3 class="mt-5 text-lg font-semibold">4. Cookies & suivi</h3>
+        <p>Le site peut utiliser des cookies et des outils d’analyse pour améliorer l’expérience utilisateur. Les données sont anonymisées.</p>
 
-    <h2>6. Propriété intellectuelle</h2>
-    <p>Tout le contenu du site, y compris les textes générés par l’IA, les images et le design, est protégé par le droit d’auteur. Vous ne pouvez pas copier, distribuer ou revendre ces contenus sans autorisation.</p>
+        <h3 class="mt-5 text-lg font-semibold">5. Sécurité & protection</h3>
+        <p>Nous mettons en place des mesures raisonnables pour protéger vos données. Aucune sécurité n’est absolue&nbsp;; gardez vos accès confidentiels.</p>
 
-    <h2>7. Modifications des conditions</h2>
-    <p>Nous nous réservons le droit de modifier ces conditions à tout moment. Les utilisateurs seront informés et doivent accepter les nouvelles conditions pour continuer à utiliser le service.</p>
+        <h3 class="mt-5 text-lg font-semibold">6. Propriété intellectuelle</h3>
+        <p>Les contenus du site (textes IA, images, design) sont protégés. Toute reproduction ou revente est interdite sans autorisation.</p>
 
-    <h2>8. Acceptation des conditions</h2>
-    <p>En cochant la case “J’accepte les politiques” et en accédant au chat, vous reconnaissez avoir lu et accepté ces conditions, et vous vous engagez à utiliser le service de manière responsable et respectueuse.</p>
+        <h3 class="mt-5 text-lg font-semibold">7. Modifications</h3>
+        <p>Nous pouvons modifier ces conditions à tout moment. La poursuite d’utilisation vaut acceptation des nouvelles conditions.</p>
 
-   
-  </div>
+        <h3 class="mt-5 text-lg font-semibold">8. Acceptation</h3>
+        <p>En cochant «&nbsp;J’accepte&nbsp;» et en accédant au chat, vous reconnaissez avoir lu et accepté ces conditions.</p>
 
-  <footer>© 2025 Madame Rêve. Tous droits réservés.</footer>
+        <div class="mt-6 p-4 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-900">
+          <p>
+            Besoin de plus d’informations sur la confidentialité&nbsp;?
+            Consultez aussi nos <a href="mentions-legales.html" class="font-semibold underline">mentions légales</a>.
+          </p>
+        </div>
+      </div>
+    </section>
 
+    <footer class="reveal text-center text-white/95 mt-6 mb-10">
+      © <span id="t-foot-name">Madame Rêve</span> — <span id="t-foot-note">Interprétations par IA. Ne remplace pas un avis médical.</span>
+    </footer>
+  </main>
+
+  <!-- i18n + logic -->
+  <script>
+    // ===== Fade-in on scroll
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
+    }, {threshold: .12});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    // ===== i18n dict
+    const T = {
+      fr: {
+        siteName: "Madame Rêve — Interprète des Rêves",
+        pageTitle: "Politiques & Conditions d’utilisation",
+        pageSub: "Transparence, respect et confidentialité : voici nos engagements.",
+        content: `
+          <h2 class="text-xl font-semibold text-brand-indigo mb-2">Conditions Générales</h2>
+          <p>En utilisant ce site et le service d’interprétation des rêves proposé par Madame Rêve,
+          vous acceptez ces conditions d’utilisation. Si vous n’êtes pas d’accord avec l’une de ces
+          conditions, veuillez ne pas utiliser ce service.</p>
+
+          <h3 class="mt-5 text-lg font-semibold">1. Usage du chat</h3>
+          <p>Le chat est conçu pour l’interprétation ludique et informative des rêves. Vous vous engagez à ne pas&nbsp;:</p>
+          <ul class="mb-3 list-disc pl-6">
+            <li>Contourner ou modifier le fonctionnement du chatbot, ou tenter d’exploiter ses failles.</li>
+            <li>Utiliser le service à des fins illégales ou malveillantes.</li>
+            <li>Harceler ou importuner d’autres utilisateurs ou le système.</li>
+            <li>Publier ou partager des contenus offensants, criminels, ou protégés par la loi.</li>
+          </ul>
+
+          <h3 class="mt-5 text-lg font-semibold">2. Limitation de responsabilité</h3>
+          <p>Les interprétations fournies par l’IA sont à but informatif et récréatif. Madame Rêve et ses services&nbsp;:</p>
+          <ul class="mb-3 list-disc pl-6">
+            <li>Ne sont pas responsables de vos décisions ou actions basées sur les interprétations.</li>
+            <li>Ne remplacent pas un conseil professionnel (médical, juridique, psychologique, etc.).</li>
+            <li>Ne garantissent pas l’exactitude ou la pertinence des résultats.</li>
+            <li>Ne peuvent être tenus responsables des interruptions du service ou de pertes de données.</li>
+          </ul>
+
+          <h3 class="mt-5 text-lg font-semibold">3. Données personnelles & marketing</h3>
+          <p>Lorsque vous utilisez le service, certaines informations peuvent être collectées (p. ex. prénom, email)&nbsp;:</p>
+          <ul class="mb-3 list-disc pl-6">
+            <li>Pour améliorer l’expérience et personnaliser le chat.</li>
+            <li>Pour envoyer des propositions commerciales, des offres affiliées ou des publicités de partenaires.</li>
+            <li>Ces informations sont stockées de manière sécurisée et utilisées uniquement à ces fins.</li>
+            <li>Vous pouvez demander la suppression de vos données à tout moment.</li>
+          </ul>
+
+          <h3 class="mt-5 text-lg font-semibold">4. Cookies & suivi</h3>
+          <p>Le site peut utiliser des cookies et des outils d’analyse pour améliorer l’expérience utilisateur. Les données sont anonymisées.</p>
+
+          <h3 class="mt-5 text-lg font-semibold">5. Sécurité & protection</h3>
+          <p>Nous mettons en place des mesures raisonnables pour protéger vos données. Aucune sécurité n’est absolue&nbsp;; gardez vos accès confidentiels.</p>
+
+          <h3 class="mt-5 text-lg font-semibold">6. Propriété intellectuelle</h3>
+          <p>Les contenus du site (textes IA, images, design) sont protégés. Toute reproduction ou revente est interdite sans autorisation.</p>
+
+          <h3 class="mt-5 text-lg font-semibold">7. Modifications</h3>
+          <p>Nous pouvons modifier ces conditions à tout moment. La poursuite d’utilisation vaut acceptation des nouvelles conditions.</p>
+
+          <h3 class="mt-5 text-lg font-semibold">8. Acceptation</h3>
+          <p>En cochant «&nbsp;J’accepte&nbsp;» et en accédant au chat, vous reconnaissez avoir lu et accepté ces conditions.</p>
+
+          <div class="mt-6 p-4 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-900">
+            <p>Besoin de plus d’informations sur la confidentialité&nbsp;?
+            Consultez aussi nos <a href="mentions-legales.html" class="font-semibold underline">mentions légales</a>.</p>
+          </div>
+        `,
+        footName: "Madame Rêve",
+        footNote: "Interprétations par IA. Ne remplace pas un avis médical."
+      },
+      en: {
+        siteName: "Madame Rêve — Dream Interpreter",
+        pageTitle: "Policies & Terms of Use",
+        pageSub: "Transparency, respect, and privacy — our commitments to you.",
+        content: `
+          <h2 class="text-xl font-semibold text-brand-indigo mb-2">General Terms</h2>
+          <p>By using this website and the dream interpretation service provided by Madame Rêve,
+          you agree to these terms of use. If you do not agree with any of the terms, please do not use the service.</p>
+
+          <h3 class="mt-5 text-lg font-semibold">1. Chat usage</h3>
+          <p>The chat is designed for playful and informative dream interpretation. You agree not to:</p>
+          <ul class="mb-3 list-disc pl-6">
+            <li>Circumvent or tamper with the chatbot or exploit potential vulnerabilities.</li>
+            <li>Use the service for illegal or malicious purposes.</li>
+            <li>Harass or abuse other users or the system.</li>
+            <li>Post or share offensive, unlawful, or copyrighted material.</li>
+          </ul>
+
+          <h3 class="mt-5 text-lg font-semibold">2. Liability limitation</h3>
+          <p>AI-generated interpretations are for informational and recreational purposes only. Madame Rêve and its services:</p>
+          <ul class="mb-3 list-disc pl-6">
+            <li>Are not responsible for decisions or actions you take based on interpretations.</li>
+            <li>Do not replace professional advice (medical, legal, psychological, etc.).</li>
+            <li>Do not guarantee accuracy or relevance of results.</li>
+            <li>Are not liable for service interruptions or data loss.</li>
+          </ul>
+
+          <h3 class="mt-5 text-lg font-semibold">3. Personal data & marketing</h3>
+          <p>Some information (e.g., first name, email) may be collected:</p>
+          <ul class="mb-3 list-disc pl-6">
+            <li>To improve your experience and personalize the chat.</li>
+            <li>To send commercial offers, affiliate proposals, or partner advertisements.</li>
+            <li>Data is stored securely and used only for these purposes.</li>
+            <li>You may request deletion of your data at any time.</li>
+          </ul>
+
+          <h3 class="mt-5 text-lg font-semibold">4. Cookies & analytics</h3>
+          <p>We may use cookies and analytics tools to improve the user experience. Data is anonymized.</p>
+
+          <h3 class="mt-5 text-lg font-semibold">5. Security & protection</h3>
+          <p>We implement reasonable measures to protect your data. No security is absolute; keep your access confidential.</p>
+
+          <h3 class="mt-5 text-lg font-semibold">6. Intellectual property</h3>
+          <p>All site content (AI text, images, design) is protected. Reproduction or resale is prohibited without authorization.</p>
+
+          <h3 class="mt-5 text-lg font-semibold">7. Changes</h3>
+          <p>We may update these terms at any time. Continuing to use the service constitutes acceptance of the updated terms.</p>
+
+          <h3 class="mt-5 text-lg font-semibold">8. Acceptance</h3>
+          <p>By checking “I accept” and accessing the chat, you acknowledge having read and accepted these terms.</p>
+
+          <div class="mt-6 p-4 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-900">
+            <p>Need more privacy details?
+            Also see our <a href="mentions-legales.html" class="font-semibold underline">legal notice</a>.</p>
+          </div>
+        `,
+        footName: "Madame Rêve",
+        footNote: "AI-generated interpretations. Not a medical service."
+      }
+    };
+
+    // ===== element refs
+    const els = {
+      siteName: document.getElementById('t-site-name'),
+      pageTitle: document.getElementById('t-page-title'),
+      pageSub: document.getElementById('t-page-sub'),
+      content: document.getElementById('t-content'),
+      footName: document.getElementById('t-foot-name'),
+      footNote: document.getElementById('t-foot-note'),
+    };
+
+    const btnFR = document.getElementById('btn-fr');
+    const btnEN = document.getElementById('btn-en');
+
+    function setLang(lang){
+      const t = T[lang] || T.fr;
+
+      els.siteName.textContent = t.siteName;
+      els.pageTitle.textContent = t.pageTitle;
+      els.pageSub.textContent = t.pageSub;
+      els.content.innerHTML = t.content;
+      els.footName.textContent = t.footName;
+      els.footNote.textContent = t.footNote;
+
+      // visual state
+      btnFR.classList.toggle('bg-white', lang==='fr');
+      btnFR.classList.toggle('text-brand-indigo', lang==='fr');
+      btnEN.classList.toggle('bg-white', lang==='en');
+      btnEN.classList.toggle('text-brand-indigo', lang==='en');
+
+      localStorage.setItem('lang', lang);
+      document.documentElement.lang = lang;
+    }
+
+    btnFR.addEventListener('click', () => setLang('fr'));
+    btnEN.addEventListener('click', () => setLang('en'));
+
+    // init from localStorage or default FR
+    setLang(localStorage.getItem('lang') || 'fr');
+  </script>
 </body>
 </html>
-
