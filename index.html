@@ -11,12 +11,8 @@
     tailwind.config = {
       theme: {
         extend: {
-          boxShadow: {
-            soft: '0 10px 25px rgba(0,0,0,.18)',
-          },
-          colors: {
-            brand: { indigo: '#6e8efb', indigoDark: '#5a7dfa', emerald: '#00a67a' }
-          }
+          boxShadow: { soft: '0 10px 25px rgba(0,0,0,.18)' },
+          colors: { brand: { indigo: '#6e8efb', indigoDark: '#5a7dfa', emerald: '#00a67a' } }
         }
       }
     }
@@ -109,6 +105,14 @@
 
         <div class="p-5">
           <form id="guideForm" onsubmit="getGuide(event)">
+            <!-- NEW: First name (optional) -->
+            <div class="mb-4">
+              <label for="guideFirstName" id="t-label-guide-firstname" class="block text-sm font-semibold text-gray-800 mb-1">Prénom (facultatif)</label>
+              <input id="guideFirstName" type="text"
+                     class="w-full border border-gray-300 rounded-xl px-3 py-3 outline-none focus:ring-2 focus:ring-emerald-300 focus:border-emerald-400"
+                     placeholder="Votre prénom">
+            </div>
+
             <div class="mb-4">
               <label for="guideEmail" id="t-label-guide-email" class="block text-sm font-semibold text-gray-800 mb-1">Email</label>
               <input class="w-full border border-gray-300 rounded-xl px-3 py-3 outline-none focus:ring-2 focus:ring-emerald-300 focus:border-emerald-400" type="email" id="guideEmail" placeholder="votre@email.com" required>
@@ -167,7 +171,7 @@
     </section>
 
     <section class="reveal mt-4 bg-white/85 rounded-2xl shadow-soft p-5">
-      <h3 class="font-semibold text-lg mb-2"><i class="fa fa-scale-balanced mr-2"></i><span id="t-legal-title">Mentions légales & RGPD</span></h3>
+      <h3 id="t-legal-title" class="font-semibold text-lg mb-2"><i class="fa fa-scale-balanced mr-2"></i>Mentions légales & RGPD</h3>
       <p id="t-legal-text" class="text-gray-800">
         Ce site respecte votre vie privée. Consultez la
         <a href="policies.html" target="_blank" rel="noopener" class="underline font-semibold">politique de confidentialité</a>
@@ -205,6 +209,7 @@
         chatHelper: "Votre prénom et votre email seront utilisés dans le chat et ne seront pas partagés.",
 
         ebookTitle: "Recevoir le guide du sommeil (par email)",
+        labelGuideFirstName: "Prénom (facultatif)",
         labelGuideEmail: "Email",
         labelGuideLang: "Langue souhaitée",
         ebookPolicy: 'J’accepte la <a href="policies.html" target="_blank" rel="noopener" class="font-semibold text-emerald-700 hover:underline">politique de confidentialité</a>.',
@@ -242,6 +247,7 @@
         chatHelper: "Your first name and email are used in the chat and won’t be shared.",
 
         ebookTitle: "Get the Sleep Guide (by email)",
+        labelGuideFirstName: "First name (optional)",
         labelGuideEmail: "Email",
         labelGuideLang: "Preferred language",
         ebookPolicy: 'I accept the <a href="policies.html" target="_blank" rel="noopener" class="font-semibold underline-offset-2">privacy policy</a>.',
@@ -281,6 +287,7 @@
       chatHelper: document.getElementById('t-chat-helper'),
 
       ebookTitle: document.getElementById('t-ebook-title'),
+      labelGuideFirstName: document.getElementById('t-label-guide-firstname'),
       labelGuideEmail: document.getElementById('t-label-guide-email'),
       labelGuideLang: document.getElementById('t-label-guide-lang'),
       ebookPolicy: document.getElementById('t-ebook-policy'),
@@ -323,6 +330,7 @@
       els.chatHelper.textContent = t.chatHelper;
 
       els.ebookTitle.textContent = t.ebookTitle;
+      els.labelGuideFirstName.textContent = t.labelGuideFirstName;
       els.labelGuideEmail.textContent = t.labelGuideEmail;
       els.labelGuideLang.textContent = t.labelGuideLang;
       els.btnGuide.textContent = t.btnGuide;
@@ -351,6 +359,7 @@
       // placeholders
       document.getElementById('name').placeholder = (lang === 'en') ? 'Your first name' : 'Votre prénom';
       document.getElementById('email').placeholder = (lang === 'en') ? 'Your email' : 'Votre email';
+      document.getElementById('guideFirstName').placeholder = (lang === 'en') ? 'Your first name' : 'Votre prénom';
       document.getElementById('guideEmail').placeholder = (lang === 'en') ? 'your@email.com' : 'votre@email.com';
 
       // select default for guide
@@ -402,7 +411,13 @@
 
       const emailGuide = document.getElementById("guideEmail").value.trim();
       const lang = document.getElementById("guideLang").value || (localStorage.getItem('lang') || 'fr');
-      const firstName = (document.getElementById("name")?.value || '').trim();
+
+      // NEW: priorité au prénom saisi dans le formulaire Guide
+      const firstName = (
+        document.getElementById("guideFirstName")?.value
+        || document.getElementById("name")?.value
+        || ''
+      ).trim();
 
       const labelSending = (lang==='en') ? "Sending..." : "Envoi...";
       const labelDone    = (lang==='en') ? "Sent!" : "Envoyé !";
