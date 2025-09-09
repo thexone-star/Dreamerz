@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mentions légales – Madame Rêve</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          boxShadow: { soft: '0 10px 25px rgba(0,0,0,.18)' },
+          colors: { brand: { indigo: '#6e8efb', indigoDark: '#5a7dfa', emerald: '#00a67a' } }
+        }
+      }
+    }
+  </script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <!-- Fade-in animations -->
+  <style>
+    * { box-sizing: border-box; }
+    .reveal{ opacity:0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.show{ opacity:1; transform: none; }
+  </style>
+</head>
+
+<body class="min-h-screen text-gray-900 bg-gradient-to-br from-indigo-900 via-rose-700 to-amber-300">
+  <!-- Header -->
+  <header class="sticky top-0 z-10 bg-brand-indigo/90 text-white shadow-lg">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2 font-semibold text-lg">
+        <i class="fas fa-cloud-moon"></i>
+        <span id="t-site-name">Madame Rêve — Interprète des Rêves</span>
+      </div>
+      <!-- Lang switch -->
+      <div class="flex items-center gap-1 bg-white/20 rounded-full p-1">
+        <button id="btn-fr" type="button" class="px-3 py-1.5 rounded-full font-semibold transition text-white bg-white/0">FR</button>
+        <button id="btn-en" type="button" class="px-3 py-1.5 rounded-full font-semibold transition text-white/90 hover:text-white">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 md:px-6">
+    <!-- Page title -->
+    <section class="reveal text-center text-white mt-8">
+      <h1 id="t-page-title" class="text-2xl md:text-3xl font-extrabold tracking-tight">
+        Mentions légales
+      </h1>
+      <p id="t-page-sub" class="opacity-95 mt-2">
+        Informations sur l’éditeur, l’hébergeur et les conditions d’utilisation du site.
+      </p>
+    </section>
+
+    <!-- Content card -->
+    <section class="reveal mt-6 bg-white/90 backdrop-blur-md rounded-2xl shadow-soft p-5 md:p-7">
+      <div id="t-content" class="prose max-w-none prose-p:leading-relaxed prose-ul:list-disc prose-ul:pl-6">
+        <!-- Contenu FR par défaut (sera remplacé si EN) -->
+        <h2 class="text-xl font-semibold text-brand-indigo mb-2">Éditeur du site</h2>
+        <p><strong>Madame Rêve</strong> — Service d’interprétation de rêves par IA<br>
+        Email : <a href="mailto:contact@mme-reve.com">contact@mme-reve.com</a><br>
+        Site : <a href="https://mme-reve.com" target="_blank" rel="noopener">mme-reve.com</a></p>
+
+        <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Hébergement</h2>
+        <p>Le site est hébergé par un prestataire basé dans l’Union européenne ou dans un pays offrant des garanties adéquates de protection des données. Les coordonnées de l’hébergeur peuvent être communiquées sur demande légitime.</p>
+
+        <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Propriété intellectuelle</h2>
+        <p>L’ensemble des éléments du site (textes, images, graphismes, logos, mises en page, contenus générés par IA, etc.) sont protégés par le droit d’auteur. Toute reproduction, représentation, modification, diffusion ou exploitation, totale ou partielle, sans autorisation écrite préalable est interdite.</p>
+
+        <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Responsabilité</h2>
+        <p>Les interprétations fournies par l’IA sont informatives et récréatives. Elles ne constituent pas un avis médical, psychologique, juridique ou professionnel. L’éditeur ne saurait être tenu responsable de l’usage qui en est fait ni des conséquences qui en découlent.</p>
+
+        <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Données personnelles</h2>
+        <p>Pour en savoir plus sur la collecte, l’usage et la conservation de vos données, consultez nos
+          <a href="policies.html" class="font-semibold underline">politiques & conditions</a>. Vous disposez d’un droit d’accès, de rectification et de suppression de vos données.</p>
+
+        <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Cookies</h2>
+        <p>Le site peut utiliser des cookies et outils d’analyse anonymisés afin d’améliorer l’expérience utilisateur. Vous pouvez configurer votre navigateur pour les refuser.</p>
+
+        <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Signalement & modération</h2>
+        <p>Pour signaler un abus, un contenu illicite ou un dysfonctionnement, contactez-nous à
+          <a href="mailto:contact@mme-reve.com">contact@mme-reve.com</a>.</p>
+
+        <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Droit applicable</h2>
+        <p>Ces mentions légales sont soumises au droit applicable dans le pays de l’éditeur. En cas de litige, une solution amiable sera privilégiée avant toute action.</p>
+
+        <p class="mt-6 text-sm text-gray-600">Dernière mise à jour : <span id="t-last-update">septembre 2025</span></p>
+      </div>
+    </section>
+
+    <footer class="reveal text-center text-white/95 mt-6 mb-10">
+      © <span id="t-foot-name">Madame Rêve</span> — <span id="t-foot-note">Interprétations par IA. Ne remplace pas un avis médical.</span>
+    </footer>
+  </main>
+
+  <!-- i18n + logic -->
+  <script>
+    // ===== Fade-in on scroll
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
+    }, {threshold: .12});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    // ===== i18n dict
+    const T = {
+      fr: {
+        siteName: "Madame Rêve — Interprète des Rêves",
+        pageTitle: "Mentions légales",
+        pageSub: "Informations sur l’éditeur, l’hébergeur et les conditions d’utilisation du site.",
+        content: `
+          <h2 class="text-xl font-semibold text-brand-indigo mb-2">Éditeur du site</h2>
+          <p><strong>Madame Rêve</strong> — Service d’interprétation de rêves par IA<br>
+          Email : <a href="mailto:contact@mme-reve.com">contact@mme-reve.com</a><br>
+          Site : <a href="https://mme-reve.com" target="_blank" rel="noopener">mme-reve.com</a></p>
+
+          <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Hébergement</h2>
+          <p>Le site est hébergé par un prestataire basé dans l’Union européenne ou dans un pays offrant des garanties adéquates de protection des données. Les coordonnées de l’hébergeur peuvent être communiquées sur demande légitime.</p>
+
+          <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Propriété intellectuelle</h2>
+          <p>L’ensemble des éléments du site (textes, images, graphismes, logos, mises en page, contenus générés par IA, etc.) sont protégés par le droit d’auteur. Toute reproduction, représentation, modification, diffusion ou exploitation, totale ou partielle, sans autorisation écrite préalable est interdite.</p>
+
+          <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Responsabilité</h2>
+          <p>Les interprétations fournies par l’IA sont informatives et récréatives. Elles ne constituent pas un avis médical, psychologique, juridique ou professionnel. L’éditeur ne saurait être tenu responsable de l’usage qui en est fait ni des conséquences qui en découlent.</p>
+
+          <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Données personnelles</h2>
+          <p>Pour en savoir plus sur la collecte, l’usage et la conservation de vos données, consultez nos
+            <a href="policies.html" class="font-semibold underline">politiques & conditions</a>. Vous disposez d’un droit d’accès, de rectification et de suppression de vos données.</p>
+
+          <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Cookies</h2>
+          <p>Le site peut utiliser des cookies et outils d’analyse anonymisés afin d’améliorer l’expérience utilisateur. Vous pouvez configurer votre navigateur pour les refuser.</p>
+
+          <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Signalement & modération</h2>
+          <p>Pour signaler un abus, un contenu illicite ou un dysfonctionnement, contactez-nous à
+            <a href="mailto:contact@mme-reve.com">contact@mme-reve.com</a>.</p>
+
+          <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Droit applicable</h2>
+          <p>Ces mentions légales sont soumises au droit applicable dans le pays de l’éditeur. En cas de litige, une solution amiable sera privilégiée avant toute action.</p>
+
+          <p class="mt-6 text-sm text-gray-600">Dernière mise à jour : <span>septembre 2025</span></p>
+        `,
+        footName: "Madame Rêve",
+        footNote: "Interprétations par IA. Ne remplace pas un avis médical."
+      },
+      en: {
+        siteName: "Madame Rêve — Dream Interpreter",
+        pageTitle: "Legal Notice",
+        pageSub: "Information about the publisher, hosting provider, and terms of use.",
+        content: `
+          <h2 class="text-xl font-semibold text-brand-indigo mb-2">Site Publisher</h2>
+          <p><strong>Madame Rêve</strong> — AI-powered dream interpretation service<br>
+          Email: <a href="mailto:contact@mme-reve.com">contact@mme-reve.com</a><br>
+          Website: <a href="https://mme-reve.com" target="_blank" rel="noopener">mme-reve.com</a></p>
+
+          <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Hosting</h2>
+          <p>The website is hosted by a provider located in the European Union or in a country offering adequate data protection safeguards. Hosting details can be shared upon legitimate request.</p>
+
+          <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Intellectual Property</h2>
+          <p>All site elements (texts, images, graphics, logos, layouts, AI-generated content, etc.) are protected by copyright. Any reproduction, representation, modification, distribution, or exploitation, in whole or in part, without prior written consent is prohibited.</p>
+
+          <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Liability</h2>
+          <p>AI interpretations are for informational and recreational purposes only. They do not constitute medical, psychological, legal, or professional advice. The publisher cannot be held liable for how interpretations are used or their consequences.</p>
+
+          <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Personal Data</h2>
+          <p>For details on how we collect, use, and retain your data, please see our
+            <a href="policies.html" class="font-semibold underline">policies & terms</a>. You may request access, rectification, or deletion of your data at any time.</p>
+
+          <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Cookies</h2>
+          <p>The site may use cookies and anonymized analytics tools to improve user experience. You can configure your browser to refuse them.</p>
+
+          <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Reporting & Moderation</h2>
+          <p>To report abuse, unlawful content, or a malfunction, please contact
+            <a href="mailto:contact@mme-reve.com">contact@mme-reve.com</a>.</p>
+
+          <h2 class="text-xl font-semibold text-brand-indigo mt-6 mb-2">Governing Law</h2>
+          <p>These legal notices are governed by the law applicable in the publisher’s country. In case of dispute, an amicable solution will be sought before any legal action.</p>
+
+          <p class="mt-6 text-sm text-gray-600">Last updated: <span>September 2025</span></p>
+        `,
+        footName: "Madame Rêve",
+        footNote: "AI-generated interpretations. Not a medical service."
+      }
+    };
+
+    const els = {
+      siteName: document.getElementById('t-site-name'),
+      pageTitle: document.getElementById('t-page-title'),
+      pageSub: document.getElementById('t-page-sub'),
+      content: document.getElementById('t-content'),
+      footName: document.getElementById('t-foot-name'),
+      footNote: document.getElementById('t-foot-note'),
+    };
+
+    const btnFR = document.getElementById('btn-fr');
+    const btnEN = document.getElementById('btn-en');
+
+    function setLang(lang){
+      const t = T[lang] || T.fr;
+
+      els.siteName.textContent = t.siteName;
+      els.pageTitle.textContent = t.pageTitle;
+      els.pageSub.textContent = t.pageSub;
+      els.content.innerHTML = t.content;
+      els.footName.textContent = t.footName;
+      els.footNote.textContent = t.footNote;
+
+      // visual state
+      btnFR.classList.toggle('bg-white', lang==='fr');
+      btnFR.classList.toggle('text-brand-indigo', lang==='fr');
+      btnEN.classList.toggle('bg-white', lang==='en');
+      btnEN.classList.toggle('text-brand-indigo', lang==='en');
+
+      localStorage.setItem('lang', lang);
+      document.documentElement.lang = lang;
+    }
+
+    btnFR.addEventListener('click', () => setLang('fr'));
+    btnEN.addEventListener('click', () => setLang('en'));
+
+    // init
+    setLang(localStorage.getItem('lang') || 'fr');
+  </script>
+</body>
+</html>
