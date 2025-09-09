@@ -107,12 +107,10 @@
     const qs = new URLSearchParams({ userName, userEmail }).toString();
     const webhookUrl = `${BASE_WEBHOOK}?${qs}`;
 
-    // 4) messages d’accueil — tableau de strings (évite React error #185)
-    const welcome = [
-      `Hey ${userName || 'cher visiteur'} 👋, cest bien votre prénom.` +
-      (userEmail ? ` et apres email ? : ${userEmail}.` : '') + '  Raconter moi votre rêve Svp'
-    ];
-
+  // 4) messages d’accueil — tableau de strings (évite React error #185)
+const welcome = [
+  `Hey ${userName || 'cher visiteur / dear visitor'} 👋`
+];
     // 5) création du chat n8n
     createChat({
       target: '#n8n-chat',
@@ -156,3 +154,4 @@
   </script>
 </body>
 </html>
+
